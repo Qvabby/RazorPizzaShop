@@ -1,0 +1,48 @@
+﻿@page
+@model RazorPizzaShop.Pages.PizzaModel
+@{
+}
+<div class="container text-center">
+    <h2 class="my-4">Our Greatest STONED Pizzas</h2>
+</div>
+
+<div class="container-fluid bg-secondary py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <img src="media/CustomPizza.png" class="img-fluid rounded-circle mb-4" style="width: 150px; height: 150px;">
+                <h4>Create Your Own <strong class="text-warning">STONED</strong> Pizza</h4>
+                <p class="text-white">Choose your own crust, sauce, cheese, and toppings to create your perfect pizza!</p>
+                <a class="btn btn-warning mb-2" href="/Forms/CustomPizza">Create Now</a>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="row justify-content-center text-center ">
+            @foreach (var pizza in Model.FakePizzaDb)
+            {
+                <div class="col-md-4 mb-4 card">
+                    @{
+                        var imagepath = "~/media/" + (pizza.ImageTitle);
+                    }
+                    <div class="card-img-top">
+                        <img src="@imagepath" class="img-fluid rounded mb-3" alt="@pizza.PizzaName" asp-append-version="true">
+                    </div>
+                    <div class="card-header">
+                        <h5 class="text-warning">@pizza.PizzaName</h5>
+
+                    </div>
+                    <div class="card-footer mb-1 card-text">
+                        <p>@pizza.FinalPrice</p>
+                        <a class="btn btn-warning mt-1" asp-page="Checkout/Checkout" asp-route-PizzaName="@pizza.PizzaName" asp-route-FinalPrice="@pizza.FinalPrice" asp-route-Pizza="@pizza" asp-route-ImageTitle="@pizza.ImageTitle">
+                            Get Pizza!
+                        </a>
+                    </div>
+
+
+                </div>
+            }
+        </div>
+    </div>
+</div>

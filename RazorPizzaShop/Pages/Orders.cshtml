@@ -1,0 +1,114 @@
+﻿@page
+@using RazorPizzaShop.Models;
+@model RazorPizzaShop.Pages.OrdersModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Pizza Name
+            </th>
+            <th>
+                Pizza Price
+            </th>
+            @{
+                var orderProperties = typeof(PizzaOrder).GetProperties().Where(p => p.PropertyType == typeof(bool));
+                //foreach (var order in Model.PizzaOrders)
+                //{
+                //    foreach (var property in orderProperties)
+                //    {
+                //        if ((bool)property.GetValue(order) == true)
+                //        {
+                //            <th>
+                //                @property.Name
+                //            </th>
+                //        }
+                //        break;
+                //    }
+                //}
+
+                for (int i = 0; i < orderProperties.Count(); i++)
+                {
+                    for (int k = 0; k < Model.PizzaOrders.Count(); k++)
+                    {
+                        k = i;
+
+                        bool Value = (bool)orderProperties.ToList()[i].GetValue(Model.PizzaOrders[k]);
+
+                        if (Value == true)
+
+                        {
+                            <th>
+                                @orderProperties.ToList()[i].Name
+                            </th>
+
+                        }
+
+                        break;
+                    }
+                }
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var order in Model.PizzaOrders)
+            {
+                <tr>
+                    <td>
+                        @order.Id
+                    </td>
+                    <td>
+                        @order.PizzaName
+                    </td>
+                    <td>
+                        @order.PizzaPrice
+                    </td>
+                    @{
+
+                        //foreach (var o in Model.PizzaOrders)
+                        //{
+                        //    foreach (var property in orderProperties)
+                        //    {
+                        //        if ((bool)property.GetValue(o) == true)
+                        //        {
+                        //            <th>
+                        //                @property.GetValue(o)
+                        //            </th>
+                        //        }
+                        //        break;
+                        //    }
+                        //}
+                        for (int i = 0; i < orderProperties.Count(); i++)
+                        {
+                            for (int k = 0; k < Model.PizzaOrders.Count(); k++)
+                            {
+                                k = i;
+
+                                bool Value = (bool)orderProperties.ToList()[i].GetValue(Model.PizzaOrders[k]);
+
+                                if (Value == true)
+
+                                {
+                                    <th>
+                                        @orderProperties.ToList()[i].GetValue(Model.PizzaOrders[k]);
+                                    </th>
+
+                                }
+
+                                break;
+                            }
+                        }
+
+
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

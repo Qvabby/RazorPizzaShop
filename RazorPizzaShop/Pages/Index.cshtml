@@ -1,0 +1,74 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container-fluid bg-dark-gray py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Welcome to <span style="color:darkgray">Qva</span> Pizza Shop</h1>
+            <p>We offer the best <strong style="color:green">STONED</strong> pizza in town, made with fresh Sativa ingredients and cooked <strong>(HIGHLY)</strong> to perfection in our wood-fired oven. Come and enjoy a slice today!</p>
+
+            <button id="view-menu" class="btn btn-warning">View Menu</button>
+            <a class="btn btn-danger" asp-page="/Pizza">Order Now</a>
+
+            <div id="menu-dropdown"></div>
+        </div>
+        <div class="col-md-6">
+            <img src="media/MainImage.jpg" alt="Pizza" class="img-fluid rounded-circle mb-4 ms-5" style="width: 450px; height: 350px">
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            var menuVisible = false;
+            var menuDropdown = $('#menu-dropdown');
+            var viewMenuButton = $('#view-menu');
+
+            viewMenuButton.click(function () {
+                if (!menuVisible) {
+                    var selectElem = $('<select class="form-control"></select>');
+                    selectElem.append($('<option></option>').val('').text('Select a food type'));
+                    selectElem.append($('<option></option>').val('pizza').text('Pizza'));
+                    selectElem.append($('<option></option>').val('pasta').text('Pasta'));
+                    selectElem.append($('<option></option>').val('salad').text('Salad'));
+                    selectElem.click(function (event) {
+                        event.stopPropagation();
+                    });
+                    selectElem.mouseleave(function () {
+                        $(this).remove();
+                        menuVisible = false;
+                        viewMenuButton.prop('disabled', false);
+                    });
+                    menuDropdown.append(selectElem);
+                    menuVisible = true;
+                    viewMenuButton.prop('disabled', true);
+                }
+            });
+
+            viewMenuButton.mouseleave(function () {
+                if (menuVisible) {
+                    menuDropdown.find('select').remove();
+                    menuVisible = false;
+                    viewMenuButton.prop('disabled', false);
+                }
+            });
+
+            $(document).click(function (event) {
+                var target = $(event.target);
+                if (!target.is(viewMenuButton) && !target.closest(viewMenuButton).length && menuVisible) {
+                    menuDropdown.find('select').remove();
+                    menuVisible = false;
+                    viewMenuButton.prop('disabled', false);
+                }
+            });
+        });
+    </script>
+}
+
+
+
